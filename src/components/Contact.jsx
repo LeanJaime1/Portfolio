@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const contactChannels = [
   {
@@ -72,11 +73,26 @@ const Contact = () => {
   };
 
   return (
-    <main id="contact" className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16">
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-75 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+    <main
+      id="contact"
+      className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16"
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2 }}
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-75 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <section className="flex flex-col items-center justify-center text-center mb-16 p-4">
+        {/* Encabezado animado al scroll */}
+        <motion.section
+          initial={{ opacity: 0, y: -25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-col items-center justify-center text-center mb-16 p-4"
+        >
           <p className="text-emerald-400 font-bold text-sm tracking-wider uppercase">
             CONTACTO
           </p>
@@ -87,11 +103,17 @@ const Contact = () => {
             Estoy disponible para nuevos desafíos técnicos, propuestas laborales
             y desarrollo de soluciones web.
           </p>
-        </section>
+        </motion.section>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Columna Izquierda: Encabezado contextual + Cajas directas */}
-          <div className="lg:col-span-5 flex flex-col gap-4">
+          {/* Columna Izquierda animada al scroll */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-5 flex flex-col gap-4"
+          >
             <div className="mb-2">
               <span className="text-emerald-400 font-bold text-xs tracking-wider uppercase">
                 CANALES DIRECTOS
@@ -106,12 +128,14 @@ const Contact = () => {
             </div>
 
             {contactChannels.map((channel) => (
-              <a
+              <motion.a
                 key={channel.id}
                 href={channel.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 p-5 bg-slate-900/50 border border-slate-800 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-all hover:bg-slate-900/80"
+                whileHover={{ x: 6 }}
+                whileTap={{ scale: 0.98 }}
+                className="group flex items-center gap-4 p-5 bg-slate-900/50 border border-slate-800 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-colors hover:bg-slate-900/80"
               >
                 <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl group-hover:scale-105 transition-transform">
                   {channel.icon}
@@ -124,12 +148,18 @@ const Contact = () => {
                     {channel.value}
                   </p>
                 </div>
-              </a>
+              </motion.a>
             ))}
-          </div>
+          </motion.div>
 
-          {/* Columna Derecha: Formulario ampliado */}
-          <div className="lg:col-span-7 bg-slate-900/50 p-8 sm:p-10 border border-slate-800 rounded-2xl backdrop-blur-sm">
+          {/* Columna Derecha Formulario animado al scroll */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            className="lg:col-span-7 bg-slate-900/50 p-8 sm:p-10 border border-slate-800 rounded-2xl backdrop-blur-sm"
+          >
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
@@ -208,9 +238,11 @@ const Contact = () => {
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-500 text-slate-950 font-semibold px-6 py-4 rounded-xl text-sm transition-all hover:bg-emerald-400 active:scale-[0.99] cursor-pointer shadow-lg shadow-emerald-500/10 mt-2"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-500 text-slate-950 font-semibold px-6 py-4 rounded-xl text-sm transition-colors hover:bg-emerald-400 cursor-pointer shadow-lg shadow-emerald-500/10 mt-2"
               >
                 <span>Enviar mensaje</span>
                 <svg
@@ -227,9 +259,9 @@ const Contact = () => {
                     d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
                   />
                 </svg>
-              </button>
+              </motion.button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>

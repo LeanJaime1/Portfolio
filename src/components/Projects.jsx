@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const allProjects = [
   {
@@ -49,6 +50,18 @@ const allProjects = [
     webUrl: "http://kanto-league.infinityfreeapp.com",
     codeUrl: "https://github.com/LeanJaime1/Kanto_League",
   },
+  {
+    id: "frenchi-fest",
+    category: "commercial",
+    categoryLabel: "Comercial",
+    title: "Frenchifest",
+    description:
+      "Landing page institucional para una empresa de iluminación y animación de eventos.",
+    image: "/project-5.png",
+    tags: ["React", "Tailwind CSS"],
+    webUrl: "http://frenchifest.vercel.app",
+    codeUrl: "https://github.com/LeanJaime1/Frenchifest",
+  },
 ];
 
 const filterTabs = [
@@ -57,9 +70,27 @@ const filterTabs = [
   { id: "academic", label: "Proyectos Académicos" },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
 function ProjectCard({ project }) {
   return (
-    <article  className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-emerald-500/5 backdrop-blur-sm">
+    <motion.article
+      layout
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+      whileHover={{ y: -6 }}
+      className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-emerald-500/50 transition-colors duration-300 overflow-hidden shadow-lg hover:shadow-emerald-500/5 backdrop-blur-sm"
+    >
       <div className="relative overflow-hidden">
         <img
           className="w-full h-52 object-cover object-center group-hover:scale-105 transition-transform duration-500"
@@ -134,7 +165,7 @@ function ProjectCard({ project }) {
           </a>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -147,11 +178,20 @@ function Projects() {
       : allProjects.filter((project) => project.category === activeTab);
 
   return (
-    <main id="projects" className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16">
+    <main
+      id="projects"
+      className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16"
+    >
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-75 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <section className="flex flex-col justify-center text-center items-center p-4 mb-8">
+        <motion.section
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-col justify-center text-center items-center p-4 mb-8"
+        >
           <p className="text-emerald-400 font-bold text-sm tracking-wider uppercase">
             PORTFOLIO
           </p>
@@ -161,10 +201,16 @@ function Projects() {
           <p className="text-slate-400 font-medium max-w-lg">
             Explorá mis trabajos comerciales desarrollados para clientes y proyectos técnicos académicos.
           </p>
-        </section>
+        </motion.section>
 
-        {/* Barra de Filtros Unificada */}
-        <div className="flex justify-center mb-12">
+        {/* Barra de Filtros con animación en scroll */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex justify-center mb-12"
+        >
           <div className="inline-flex p-1.5 bg-slate-900/80 border border-slate-800 rounded-2xl backdrop-blur-sm gap-1">
             {filterTabs.map((tab) => {
               const isActive = activeTab === tab.id;
@@ -183,14 +229,19 @@ function Projects() {
               );
             })}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Grilla Única de Proyectos */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </section>
+        {/* Grilla Animada al Scroll */}
+        <motion.section
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </AnimatePresence>
+        </motion.section>
       </div>
     </main>
   );

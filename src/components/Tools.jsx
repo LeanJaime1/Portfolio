@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const techCategories = [
   {
     id: "frontend",
@@ -19,26 +21,11 @@ const techCategories = [
       </svg>
     ),
     skills: [
-      {
-        name: "React",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-      },
-      {
-        name: "Vue.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg",
-      },
-      {
-        name: "Tailwind CSS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-      },
-      {
-        name: "Bootstrap",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg",
-      },
-      {
-        name: "Javascript",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-      },
+      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+      { name: "Vue.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" },
+      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+      { name: "Bootstrap", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" },
+      { name: "Javascript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
     ],
   },
   {
@@ -61,14 +48,8 @@ const techCategories = [
       </svg>
     ),
     skills: [
-      {
-        name: "Node.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
-      },
-      {
-        name: "PHP",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
-      },
+      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+      { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
     ],
   },
   {
@@ -91,10 +72,7 @@ const techCategories = [
       </svg>
     ),
     skills: [
-      {
-        name: "MySQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
-      },
+      { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
     ],
   },
   {
@@ -114,41 +92,60 @@ const techCategories = [
           strokeLinejoin="round"
           d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z"
         />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M4.867 19.125h.008v.008h-.008v-.008Z"
-        />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008Z" />
       </svg>
     ),
     skills: [
-      {
-        name: "Git & GitHub",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
-      },
-      {
-        name: "Photoshop",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg",
-      },
-      {
-        name: "VS Code",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg",
-      },
-      {
-        name: "Illustrator",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/illustrator/illustrator-original.svg",
-      },
+      { name: "Git & GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+      { name: "Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" },
+      { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
+      { name: "Illustrator", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/illustrator/illustrator-original.svg" },
+      { name: "Gemini", icon: "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" },
     ],
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
+const skillItemVariants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1 },
+};
+
 function Tools() {
   return (
-    <main id="stack" className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16">
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-75 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+    <main className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2 }}
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-75 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <section className="flex flex-col items-center justify-center text-center mb-12 p-4">
+        <motion.section
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center justify-center text-center mb-12 p-4"
+        >
           <p className="text-emerald-400 font-bold text-sm tracking-wider uppercase">
             TECH STACK
           </p>
@@ -158,26 +155,38 @@ function Tools() {
           <p className="text-slate-400 font-medium max-w-lg">
             Tecnologías modernas para crear experiencias web excepcionales.
           </p>
-        </section>
+        </motion.section>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           {techCategories.map((category) => (
-            <div
+            <motion.div
               key={category.id}
+              variants={cardVariants}
+              whileHover={{ y: -4 }}
               className="bg-slate-900/50 p-6 border border-slate-800 rounded-2xl backdrop-blur-sm hover:border-emerald-500/50 transition-colors"
             >
               <div className="flex items-center gap-3 mb-6">
                 {category.icon}
-                <h3 className="text-white font-bold text-xl">
-                  {category.title}
-                </h3>
+                <h3 className="text-white font-bold text-xl">{category.title}</h3>
               </div>
 
-              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <motion.ul
+                variants={containerVariants}
+                className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+              >
                 {category.skills.map((skill) => (
-                  <li
+                  <motion.li
                     key={skill.name}
-                    className="flex flex-col items-center justify-center p-4 rounded-xl bg-slate-800/30 border border-slate-700/40 hover:border-emerald-500/50 transition-colors"
+                    variants={skillItemVariants}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex flex-col items-center justify-center p-4 rounded-xl bg-slate-800/30 border border-slate-700/40 hover:border-emerald-500/50 transition-colors cursor-default"
                   >
                     <img
                       src={skill.icon}
@@ -188,12 +197,12 @@ function Tools() {
                     <h4 className="text-slate-200 text-sm font-medium text-center">
                       {skill.name}
                     </h4>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
-            </div>
+              </motion.ul>
+            </motion.div>
           ))}
-        </section>
+        </motion.section>
       </div>
     </main>
   );
