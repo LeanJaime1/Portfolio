@@ -70,24 +70,9 @@ const filterTabs = [
   { id: "academic", label: "Proyectos Académicos" },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
-
 function ProjectCard({ project }) {
   return (
     <motion.article
-      layout
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
       whileHover={{ y: -6 }}
       className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-emerald-500/50 transition-colors duration-300 overflow-hidden shadow-lg hover:shadow-emerald-500/5 backdrop-blur-sm"
     >
@@ -186,10 +171,10 @@ function Projects() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <motion.section
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="flex flex-col justify-center text-center items-center p-4 mb-8"
         >
           <p className="text-emerald-400 font-bold text-sm tracking-wider uppercase">
@@ -203,45 +188,48 @@ function Projects() {
           </p>
         </motion.section>
 
-        {/* Barra de Filtros con animación en scroll */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center mb-12"
-        >
-          <div className="inline-flex p-1.5 bg-slate-900/80 border border-slate-800 rounded-2xl backdrop-blur-sm gap-1">
+        {/* Selector de pestañas */}
+        <div className="flex justify-center mb-12">
+          <div className="relative inline-flex p-1.5 bg-slate-900/80 border border-slate-800 rounded-2xl backdrop-blur-sm gap-1">
             {filterTabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? "bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                  className={`relative px-5 py-2 rounded-xl text-sm font-semibold transition-colors duration-200 cursor-pointer z-10 ${
+                    isActive ? "text-slate-950" : "text-slate-400 hover:text-white"
                   }`}
                 >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeFilterPill"
+                      className="absolute inset-0 bg-emerald-500 rounded-xl -z-10 shadow-md shadow-emerald-500/20"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
                   {tab.label}
                 </button>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Grilla Animada al Scroll */}
-        <motion.section
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
+        {/* Transición de grilla en bloque mediante mode="wait" */}
+        <AnimatePresence mode="wait">
+          <motion.section
+            key={activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
-          </AnimatePresence>
-        </motion.section>
+          </motion.section>
+        </AnimatePresence>
       </div>
     </main>
   );

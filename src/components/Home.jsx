@@ -61,7 +61,7 @@ function Home() {
       {/* Párrafo Principal */}
       <div className="text-slate-300 text-xl sm:text-2xl md:text-3xl max-w-4xl min-h-22.5 sm:min-h-20 leading-relaxed mb-12 font-light">
         <TextType
-          text="FrontEnd Developer enfocado en crear experiencias web modernas."
+          text="FrontEnd Developer enfocado en crear experiencias que conecten."
           speed={30}
           cursor={true}
           cursorChar="|"

@@ -131,7 +131,7 @@ const skillItemVariants = {
 
 function Tools() {
   return (
-    <main className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16">
+    <main id="stack" className="relative min-h-screen w-full bg-[#080c14] overflow-hidden pt-28 pb-16">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 const contactChannels = [
   {
@@ -60,6 +61,13 @@ const Contact = () => {
     message: "",
   });
 
+  const [status, setStatus] = useState({
+    submitting: false,
+    success: false,
+    error: false,
+    message: "",
+  });
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -67,9 +75,51 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", formData);
+    setStatus({ submitting: true, success: false, error: false, message: "" });
+
+    const serviceId = "service_qxatzfe";
+    const templateId = "template_mtfp38p";
+    const publicKey = "pj2UQgZVU0OkpIJkG";
+
+    try {
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      };
+
+      // Firma estándar: send(serviceID, templateID, templateParams, publicKey)
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      setStatus({
+        submitting: false,
+        success: true,
+        error: false,
+        message: "¡Mensaje enviado con éxito! Te responderé a la brevedad.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+
+      setTimeout(() => {
+        setStatus((prev) => ({ ...prev, success: false, message: "" }));
+      }, 5000);
+    } catch (err) {
+      console.error("Error al enviar con EmailJS:", err);
+      setStatus({
+        submitting: false,
+        success: false,
+        error: true,
+        message: `Error al enviar (${err?.text || "verificá credenciales"}). Intentá nuevamente.`,
+      });
+    }
   };
 
   return (
@@ -106,7 +156,7 @@ const Contact = () => {
         </motion.section>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Columna Izquierda animada al scroll */}
+          {/* Canales Directos */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -152,7 +202,7 @@ const Contact = () => {
             ))}
           </motion.div>
 
-          {/* Columna Derecha Formulario animado al scroll */}
+          {/* Formulario con envío vía emailjs.send */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -238,27 +288,49 @@ const Contact = () => {
                 />
               </div>
 
+              {/* Mensajes de estado */}
+              {status.success && (
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm">
+                  {status.message}
+                </div>
+              )}
+
+              {status.error && (
+                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+                  {status.message}
+                </div>
+              )}
+
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-500 text-slate-950 font-semibold px-6 py-4 rounded-xl text-sm transition-colors hover:bg-emerald-400 cursor-pointer shadow-lg shadow-emerald-500/10 mt-2"
+                disabled={status.submitting}
+                whileHover={status.submitting ? {} : { scale: 1.01 }}
+                whileTap={status.submitting ? {} : { scale: 0.98 }}
+                className={`w-full inline-flex items-center justify-center gap-2 font-semibold px-6 py-4 rounded-xl text-sm transition-all shadow-lg mt-2 ${
+                  status.submitting
+                    ? "bg-slate-700 text-slate-400 cursor-not-allowed"
+                    : "bg-emerald-500 text-slate-950 hover:bg-emerald-400 shadow-emerald-500/10 cursor-pointer"
+                }`}
               >
-                <span>Enviar mensaje</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                  />
-                </svg>
+                <span>
+                  {status.submitting ? "Enviando..." : "Enviar mensaje"}
+                </span>
+                {!status.submitting && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                    />
+                  </svg>
+                )}
               </motion.button>
             </form>
           </motion.div>

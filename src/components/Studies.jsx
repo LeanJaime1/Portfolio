@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const studiesData = [
   {
@@ -8,8 +9,7 @@ const studiesData = [
     institution: "Escuela Da Vinci",
     description:
       "Formación práctica en maquetación web responsive, diseño de experiencia de usuario y administración de medios digitales.",
-    certificateUrl:
-      "https://www.linkedin.com/posts/leandro-jaime-5585a5310_en-mi-primer-publicaci%C3%B3n-quer%C3%ADa-compartir-activity-7204301890396798976-bjJO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE8cCtQBTAVM0GNPoyM335KpClz8IKul3Ec",
+    imageUrl: "/certificates/medios-digitales.jpg",
     colSpan: "col-span-1",
   },
   {
@@ -19,8 +19,7 @@ const studiesData = [
     institution: "Coderhouse",
     description:
       "Desarrollo de servidores y APIs RESTful con Node.js y Express, integración de bases de datos NoSQL con MongoDB e implementación de comunicación en tiempo real con WebSockets.",
-    certificateUrl:
-      "https://pub.coderhouse.com/certificates/eac1c508-916a-4cad-b08d-e1137d196d68?v=1",
+    imageUrl: "/certificates/backend.jpg",
     colSpan: "md:col-span-2",
   },
   {
@@ -30,8 +29,7 @@ const studiesData = [
     institution: "Coderhouse",
     description:
       "Formación integral en maquetación responsive (HTML5, CSS3, Sass), programación en JavaScript ES6+ y desarrollo de aplicaciones web complejas con React.js e integración de APIs RESTful.",
-    certificateUrl:
-      "https://pub.coderhouse.com/legacy-certificates/6776e3d913e5341471d133e2",
+    imageUrl: "/certificates/frontend.jpg",
     colSpan: "md:col-span-2",
   },
   {
@@ -41,8 +39,7 @@ const studiesData = [
     institution: "BIG School",
     description:
       "Formación en Prompt Engineering, integración de APIs de modelos de lenguaje (LLMs) y creación de agentes de IA autónomos para la automatización de flujos de desarrollo.",
-    certificateUrl:
-      "https://drive.google.com/file/d/16WCCsvXTB396tJp60CSSiTUtR5LIUhwC/view",
+    imageUrl: "/certificates/desarrollo-ia.jpg",
     colSpan: "col-span-1",
   },
   {
@@ -52,8 +49,7 @@ const studiesData = [
     institution: "Coderhouse",
     description:
       "Desarrollo y maquetación de sitios web dinámicos con WordPress y Elementor, incluyendo configuración de WooCommerce para tiendas online, optimización WPO y buenas prácticas de SEO y seguridad.",
-    certificateUrl:
-      "https://pub.coderhouse.com/certificates/bc7de365-91ce-4c56-9d64-f8495d85d34f?v=1",
+    imageUrl: "/certificates/wordpress.jpg",
     colSpan: "col-span-1",
   },
   {
@@ -63,8 +59,7 @@ const studiesData = [
     institution: "Coderhouse",
     description:
       "Desarrollo de Single Page Applications (SPA) con React.js, aplicando componentes reutilizables, hooks, renderizado condicional, ruteo dinámico con React Router y gestión de estado global.",
-    certificateUrl:
-      "https://pub.coderhouse.com/certificates/0698d19f-a571-4822-a85b-871cb9a32c5b?v=1",
+    imageUrl: "/certificates/react.jpg",
     colSpan: "md:col-span-2",
   },
 ];
@@ -88,7 +83,67 @@ const cardVariants = {
   },
 };
 
+function CertificateModal({ item, onClose }) {
+  if (!item) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md"
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.25 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-5xl max-h-[90vh] bg-[#0c121e] border border-slate-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl shadow-emerald-500/5"
+      >
+        {/* Cabecera del Visor */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/60 shrink-0">
+          <div>
+            <h4 className="text-white font-bold text-lg">{item.title}</h4>
+            <p className="text-slate-400 text-xs">
+              {item.institution} • {item.year}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer"
+            aria-label="Cerrar modal"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Contenedor de la Imagen Centrada */}
+        <div className="flex-1 w-full bg-slate-950/80 p-4 sm:p-8 flex items-center justify-center overflow-auto min-h-0">
+          <img
+            src={item.imageUrl}
+            alt={`Certificado de ${item.title}`}
+            className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-xl border border-slate-800/80"
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function Studies() {
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
+
   return (
     <main
       id="studies"
@@ -102,7 +157,6 @@ function Studies() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Encabezado con animación de entrada */}
         <motion.section
           initial={{ opacity: 0, y: -25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +175,6 @@ function Studies() {
           </p>
         </motion.section>
 
-        {/* Grilla Asimétrica (Bento Grid) Animada al Scroll */}
         <motion.section
           variants={containerVariants}
           initial="hidden"
@@ -152,9 +205,7 @@ function Studies() {
                       d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
                     />
                   </svg>
-                  <p className="text-slate-400 text-xs font-medium">
-                    {item.year}
-                  </p>
+                  <p className="text-slate-400 text-xs font-medium">{item.year}</p>
                 </div>
 
                 <h3 className="text-white font-bold text-xl mb-1 group-hover:text-emerald-400 transition-colors">
@@ -189,34 +240,30 @@ function Studies() {
                 </p>
               </div>
 
-              <motion.a
-                href={item.certificateUrl}
-                target="_blank"
-                rel="noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 self-start bg-emerald-500 text-slate-950 px-3.5 py-2 rounded-lg text-xs font-semibold shadow-md shadow-emerald-500/10"
-              >
-                <span>Ver certificado</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  className="size-3.5"
+              <div className="flex items-center gap-3">
+                <motion.button
+                  onClick={() => setSelectedCertificate(item)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-2 bg-emerald-500 text-slate-950 px-3.5 py-2 rounded-lg text-xs font-semibold shadow-md shadow-emerald-500/10 cursor-pointer"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                  />
-                </svg>
-              </motion.a>
+                  <span>Ver certificado</span>
+                </motion.button>
+              </div>
             </motion.article>
           ))}
         </motion.section>
       </div>
+
+      {/* Modal Visor de Certificados */}
+      <AnimatePresence>
+        {selectedCertificate && (
+          <CertificateModal
+            item={selectedCertificate}
+            onClose={() => setSelectedCertificate(null)}
+          />
+        )}
+      </AnimatePresence>
     </main>
   );
 }
