@@ -12,8 +12,8 @@ function App() {
     <>
       <Nav />
       <Home />
-      <Tools />
       <Projects />
+      <Tools />
       <Studies />
       <Contact />
       <Footer />

@@ -153,7 +153,7 @@ function Tools() {
             Herramientas que domino
           </h2>
           <p className="text-slate-400 font-medium max-w-lg">
-            Tecnologías modernas para crear experiencias web excepcionales.
+            Tecnologías y librerías con las que desarrollo proyectos actualmente.
           </p>
         </motion.section>
 

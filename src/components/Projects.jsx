@@ -27,6 +27,18 @@ const allProjects = [
     codeUrl: "https://github.com/LeanJaime1/ElRey",
   },
   {
+    id: "frenchi-fest",
+    category: "commercial",
+    categoryLabel: "Comercial",
+    title: "Frenchifest",
+    description:
+      "Landing page institucional para una empresa de iluminación y animación de eventos.",
+    image: "/project-5.png",
+    tags: ["React", "Tailwind CSS"],
+    webUrl: "http://frenchifest.vercel.app",
+    codeUrl: "https://github.com/LeanJaime1/Frenchifest",
+  },
+  {
     id: "playgames",
     category: "academic",
     categoryLabel: "Académico",
@@ -50,18 +62,6 @@ const allProjects = [
     webUrl: "http://kanto-league.infinityfreeapp.com",
     codeUrl: "https://github.com/LeanJaime1/Kanto_League",
   },
-  {
-    id: "frenchi-fest",
-    category: "commercial",
-    categoryLabel: "Comercial",
-    title: "Frenchifest",
-    description:
-      "Landing page institucional para una empresa de iluminación y animación de eventos.",
-    image: "/project-5.png",
-    tags: ["React", "Tailwind CSS"],
-    webUrl: "http://frenchifest.vercel.app",
-    codeUrl: "https://github.com/LeanJaime1/Frenchifest",
-  },
 ];
 
 const filterTabs = [
@@ -73,6 +73,15 @@ const filterTabs = [
 function ProjectCard({ project }) {
   return (
     <motion.article
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{
+        layout: { duration: 0.35, ease: "easeInOut" },
+        opacity: { duration: 0.25 },
+        scale: { duration: 0.25 },
+      }}
       whileHover={{ y: -6 }}
       className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-emerald-500/50 transition-colors duration-300 overflow-hidden shadow-lg hover:shadow-emerald-500/5 backdrop-blur-sm"
     >
@@ -178,7 +187,7 @@ function Projects() {
           className="flex flex-col justify-center text-center items-center p-4 mb-8"
         >
           <p className="text-emerald-400 font-bold text-sm tracking-wider uppercase">
-            PORTFOLIO
+            PROYECTOS
           </p>
           <h1 className="text-white font-extrabold text-4xl sm:text-6xl mb-4">
             Proyectos Destacados
@@ -215,21 +224,18 @@ function Projects() {
           </div>
         </div>
 
-        {/* Transición de grilla en bloque mediante mode="wait" */}
-        <AnimatePresence mode="wait">
-          <motion.section
-            key={activeTab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: "easeInOut" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+        {/* Grilla con layout animado */}
+        <motion.section
+          layout
+          transition={{ duration: 0.35, ease: "easeInOut" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence>
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
-          </motion.section>
-        </AnimatePresence>
+          </AnimatePresence>
+        </motion.section>
       </div>
     </main>
   );

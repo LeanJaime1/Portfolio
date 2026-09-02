@@ -61,14 +61,13 @@ function Home() {
       {/* Párrafo Principal */}
       <div className="text-slate-300 text-xl sm:text-2xl md:text-3xl max-w-4xl min-h-22.5 sm:min-h-20 leading-relaxed mb-12 font-light">
         <TextType
-          text="FrontEnd Developer enfocado en crear experiencias que conecten."
+          text="FrontEnd Developer enfocado en crear experiencias que conectan."
           speed={30}
           cursor={true}
           cursorChar="|"
         />
       </div>
 
-      {/* Botones de Acción con entrada suave y microinteracciones */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
@@ -76,20 +75,20 @@ function Home() {
         className="flex flex-wrap gap-5 justify-center"
       >
         <motion.a
-          href="#projects"
+          href="#contact"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
           className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl transition-colors shadow-lg shadow-emerald-500/20"
         >
-          Ver Proyectos
+          Contactame
         </motion.a>
         <motion.a
-          href="#contact"
+          href="#projects"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
           className="bg-slate-800/80 border border-slate-700/80 hover:border-emerald-500/60 text-white font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl transition-colors hover:bg-slate-800"
         >
-          Contactame
+          Ver proyectos
         </motion.a>
       </motion.div>
     </section>

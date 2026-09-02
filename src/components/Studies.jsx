@@ -171,7 +171,7 @@ function Studies() {
             Educación y Certificaciones
           </h2>
           <p className="text-slate-400 font-medium max-w-lg">
-            Aprendizaje continuo y compromiso con la excelencia técnica.
+            Recorrido académico, carreras y certificaciones.
           </p>
         </motion.section>
 

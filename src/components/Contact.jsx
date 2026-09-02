@@ -3,28 +3,7 @@ import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
 const contactChannels = [
-  {
-    id: "email",
-    title: "Correo Electrónico",
-    value: "leandrojaime17@gmail.com",
-    href: "mailto:leandrojaime17@gmail.com",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth="1.5"
-        stroke="currentColor"
-        className="w-6 h-6"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-        />
-      </svg>
-    ),
-  },
+
   {
     id: "linkedin",
     title: "LinkedIn",
@@ -91,7 +70,7 @@ const Contact = () => {
         message: formData.message,
       };
 
-      // Firma estándar: send(serviceID, templateID, templateParams, publicKey)
+      
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setStatus({
@@ -150,8 +129,7 @@ const Contact = () => {
             ¿Tenés un proyecto en mente?
           </h2>
           <p className="text-slate-400 font-medium max-w-lg">
-            Estoy disponible para nuevos desafíos técnicos, propuestas laborales
-            y desarrollo de soluciones web.
+            Contactame por propuestas de trabajo, proyectos o consultas.
           </p>
         </motion.section>
 
