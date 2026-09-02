@@ -17,8 +17,7 @@ function Footer() {
           &lt; <span className="text-white">LJ</span> /&gt;
         </a>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-              FrontEnd Developer especializado en crear experiencias digitales
-              excepcionales.
+              FrontEnd Developer enfocado en crear experiencias que conectan.
             </p>
           </div>
 
