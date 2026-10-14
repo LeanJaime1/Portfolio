@@ -10,4 +10,4 @@ Mi portfolio personal como desarrollador frontend: presentación, proyectos y co
 - Formulario o datos de contacto
 
 ## 🛠️ Tecnologías
-[React / JavaScript / Tailwind CSS] · Git · [Vercel]
+React · JavaScript · Tailwind CSS · Git · Vercel
