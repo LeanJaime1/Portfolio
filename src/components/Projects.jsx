@@ -10,7 +10,7 @@ const allProjects = [
     description:
       "Landing page institucional que presenta los servicios, trayectoria y propuesta de valor de la organización para el sector asegurador.",
     image: "/project-2.png",
-    tags: ["React", "Javascript", "CSS"],
+    tags: ["React", "Javascript", "TailwindCSS", "Vite"],
     webUrl: "https://organizacionisasa.com.ar",
     codeUrl: "https://github.com/LeanJaime1/orgIsasaWeb",
   },
@@ -35,7 +35,7 @@ const allProjects = [
       "Landing page institucional para una empresa de iluminación y animación de eventos.",
     image: "/project-5.png",
     tags: ["React", "Tailwind CSS"],
-    webUrl: "http://frenchifest.vercel.app",
+    webUrl: "https://frenchifest.vercel.app",
     codeUrl: "https://github.com/LeanJaime1/Frenchifest",
   },
   {
@@ -47,7 +47,7 @@ const allProjects = [
       "E-commerce interactivo de videojuegos con catálogo dinámico, filtros por género y plataforma, carrito de compras funcional y sistema de gestión de usuarios.",
     image: "/project-4.png",
     tags: ["PHP", "Bootstrap", "MySQL"],
-    webUrl: "#",
+    webUrl: "",
     codeUrl: "https://github.com/LeanJaime1/playGames",
   },
   {
@@ -119,12 +119,14 @@ function ProjectCard({ project }) {
         </div>
 
         <div className="flex items-center gap-3 mt-auto pt-2 border-t border-slate-800/80">
+          {project.webUrl && project.webUrl !== "#" && (
           <a
             href={project.webUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 text-slate-950 font-semibold px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-emerald-400 active:scale-95"
           >
+            )}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
